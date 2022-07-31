@@ -40,6 +40,10 @@ public class FileOperations {
 			System.out.println(file.getName());
 		}
 
+		System.out.println("----------Total Files Count----------");
+		int count = countFilesInDirectory(directoryPath);
+		System.out.println("Total Files: " + count);
+
 		System.out.println("\n<------------Show Text Files------------>");
 		File[] txtFiles = directoryPath.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -89,6 +93,19 @@ public class FileOperations {
 		}
 	}
 
+	public int countFilesInDirectory(File directory) { // UC3
+		int count = 0;
+		for (File file : directory.listFiles()) {
+			if (file.isFile()) {
+				count++;
+			}
+			if (file.isDirectory()) {
+				count += countFilesInDirectory(file);
+			}
+		}
+		return count;
+	}
+
 	public static void main(String[] args) {
 		System.out.println("***************** JAVA IO *****************");
 		boolean exit = false;
@@ -97,7 +114,8 @@ public class FileOperations {
 
 		while (!exit) {
 			System.out.println("<----------------------------------------------------------->");
-			System.out.println(" 1.Create New File\n 2.Show All Files\n 3.Delete Files\n 4.Create New Directory\n 5.Quit");
+			System.out
+					.println("1.Create New File\t 2.Show All Files\t 3.Delete Files\t 4.Create New Directory\t 5.Quit");
 			System.out.println("<--------------------Choose your options-------------------->");
 			int option = sc.nextInt();
 
